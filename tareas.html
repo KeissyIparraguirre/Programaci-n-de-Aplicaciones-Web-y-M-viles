@@ -3,27 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página de Tareas</title>
+    <title>Tareas por Semanas - Programación de Aplicaciones Web y Móviles</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffebee;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #9c704c;
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+        }
+        .semana {
+            margin: 20px;
+            border: 2px solid #9c704c;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: white;
+        }
+        .semana-titulo {
+            background-color: #9c704c;
+            color: white;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            text-align: left;
+        }
+        .tarea {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #9c704c;
+            border-radius: 5px;
+            background-color: #ffe4e1;
+        }
+        .btn {
+            margin-right: 5px;
+            background-color: #9c704c;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color:#9c704c;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <h1>Página de Tareas</h1>
-        <h2>Curso de Programación de Aplicaciones Web y Móviles</h2>
+        <h1><i class="fas fa-tasks"></i> Tareas por Semanas</h1>
+        <h2>Keissy Iparraguirre</h2>
+        <nav>
+            <ul>
+                <li><a href="index.html"><i class="fas fa-home"></i> Volver a la página principal</a></li>
+            </ul>
+        </nav>
     </header>
     <main>
-        <section>
-            <h2>Tareas Asignadas</h2>
-            <ul>
-                <li>Tarea 1: Introducción a HTML</li>
-                <li>Tarea 2: Proyecto de CSS</li>
-                <li>Tarea 3: Aplicación en JavaScript</li>
-                <li>Tarea 4: Desarrollo con React</li>
-            </ul>
-        </section>
-        <footer>
-            <p>&copy; 2024 Curso de Programación de Aplicaciones Web y Móviles</p>
-        </footer>
+        <div id="tareas-container"></div>
     </main>
+    <footer>
+        <p>&copy; 2024 Programación de Aplicaciones Web y Móviles</p>
+    </footer>
+
+    <script>
+        const tareasData = [
+            {
+                semana: 1,
+                tareas: [
+                    { id: 1, descripcion: 'Las Aplicaciones', archivo: 'tareas/Las Aplicaciones.pdf', tipo: 'pdf' },
+                    { id: 2, descripcion: 'Flutter', archivo: 'tareas/flutter.docx', tipo: 'docx' },
+                ]
+            },
+            {
+                semana: 2,
+                tareas: [
+                    { id: 3, descripcion: 'Ejercicio 1', archivo: 'tareas/ejercicio01.dart', tipo: 'dart' },
+                    { id: 4, descripcion: 'Ejercicio 2', archivo: 'tareas/ejercicio02.dart', tipo: 'dart' },
+                ]
+            }
+        ];
+
+        function generarTareas() {
+            const container = document.getElementById('tareas-container');
+            tareasData.forEach(semana => {
+                const semanaElement = document.createElement('div');
+                semanaElement.className = 'semana';
+                semanaElement.innerHTML = `
+                    <div class="semana-titulo">Semana ${semana.semana}</div>
+                    ${semana.tareas.map(tarea => `
+                        <div class="tarea">
+                            <label>${tarea.descripcion}</label>
+                            <button class="btn" onclick="descargarArchivo('${tarea.archivo}')">Descargar</button>
+                        </div>
+                    `).join('')}
+                `;
+                container.appendChild(semanaElement);
+            });
+        }
+
+        function descargarArchivo(archivo) {
+            const baseUrl = 'https://github.com/KeissyIparraguirre/Programaci-n-de-Aplicaciones-Web-y-M-viles/raw/main/';
+            const url = baseUrl + archivo;
+            window.open(url, '_blank');
+        }
+
+        window.addEventListener('load', generarTareas);
+    </script>
 </body>
 </html>
